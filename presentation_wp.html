@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Unit 4. Prediction</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Prof. Juan D. Montoro-Pons" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x2643486c76145f58768323b59448de8","expires":1}</script>
+    <script src="libs/himalaya/himalaya.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <link href="libs/editable/editable.css" rel="stylesheet" />
+    <script src="libs/editable/editable.js"></script>
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Unit 4. Prediction
+]
+.subtitle[
+## Business Analytics (iMBA)
+]
+.author[
+### Prof. Juan D. Montoro-Pons
+]
+.institute[
+### Universitat de València
+]
+.date[
+### October 2024
+]
+
+---
+
+
+class: center, middle, inverse
+
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+  font-size: 28px;
+  padding: 20px 80px 20px 80px;
+}
+.remark-code, .remark-inline-code {
+  background: #f0f0f0;
+}
+.remark-code {
+  font-size: 20px;
+}
+
+.tinyslide .remark-slide-content{
+  font-size: 50% !important;
+}
+
+.huge .remark-code { /*Change made here*/
+  font-size: 200% !important;
+}
+.tiny .remark-code { /*Change made here*/
+  font-size: 50% !important;
+}
+
+pre {
+  background: #FFBB33;
+  max-width: 100%;
+  overflow-x: scroll;
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+# Goal!
+
+--
+
+Predict an outcome
+
+--
+
+using all available data
+  
+--
+  
+and our knowledge of the factors that contribute to it
+  
+
+---
+class: inverse, center, middle
+background-image: url("images/extrapolating.png")
+background-size: 600px 400px
+background-position: center
+
+
+
+
+https://xkcd.com
+
+---
+class: inverse, center, middle
+background-image: url("images/memeAI.webp")
+background-size: 600px 400px
+background-position: center
+
+
+
+
+---
+
+
+# An example of a prediction task...
+
+
+
+.panelset[
+.panel[.panel-name[Data]
+&lt;img src="presentation_wp_files/figure-html/dataset2019-1.png" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[Predictions]
+&lt;img src="presentation_wp_files/figure-html/prediction2019-1.png" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[Actual values]
+
+&lt;img src="presentation_wp_files/figure-html/prediction2019_failure-1.png" style="display: block; margin: auto;" /&gt;
+
+]
+]
+
+---
+
+# ...which resulted in a failed forecast
+
+
+In hindsight, forecasts were  too optimistic   
+
+--
+
+Main takeaways:
+
+1. Prediction is obviously a difficult activity. Doing it well can lead to a big advantage 
+
+2. However one must acknowledge the limits of predictive analysis (known unknowns vs. unknown unknowns)
+
+
+--
+
+See https://themindcircle.com/bad-future-predictions/
+
+---
+
+# Business analytics
+
+--
+
+- Use of statistical procedures to gain insights and improve decision making. 
+
+--
+
+- Rests on data analytics (use of datasets and statistical modeling to infer conclusions about the business environment)
+
+--
+
+  1. Descriptive analytics
+
+--
+
+  2. Predictive analytics
+
+--
+
+  3. Prescriptive analytics
+
+--
+
+&gt; Predictive analysis: use of all available data and knowledge to infer about an outcome
+
+--
+
+&gt; Inputs: a dataset and some procedure to map these beyond actual observed outcomes
+
+---
+
+
+
+# Predictive analytics
+
+--
+
+Types of predictive tasks 
+
+--
+
+1. Classification analysis: a predictive modeling technique used to assign a category or label to a data point
+
+--
+
+2. Cross-section predictions: predicting numerical outcomes at a specific point in time across different entities (such as individuals, groups, countries, regions...)
+--
+
+3. Time series forecasting: predicting numerical values fo for future time periods 
+based on historical data and trends
+
+
+--
+
+&gt; The next three sessions will be about 2 and 3!
+
+---
+# Why predict? 
+
+--
+
+1. To reduce uncertainty 
+
+--
+
+2. To inform decisions (about, e.g., scheduling of production, logistics, human resources, cash flow and capital requirements...)
+
+--
+
+3. To provide a guide to long-term strategic planning (actions to be taken such as forecasts match goals)
+
+
+
+---
+
+# Prediction methods
+
+--
+
+1. Qualitative or judgmental (unavailable or incomplete data, or judgmental predictions are used to complement quantitative ones)
+
+--
+
+  - Low cost and fast to implement
+
+--
+
+  - BUT not robust, biased and not consistent over time
+
+--
+
+2. Quantitative predictions (if data is available and a reasonable assumption about the stability of inputs/outputs can be formulated)
+  
+--
+  
+  - Prediction (no temporal dimension considered): numerical or categorical response 
+
+--
+
+  - Time series forecasting
+
+
+---
+
+
+# Quantitative predictions
+
+&gt; Response = Patterns + Randomness
+
+--
+
+- Patterns are extracted through statistical procedures: models/algorithms are used
+
+--
+
+- Randomness: unexplained variability in response
+
+--
+
+&gt; Descriptive goal: maximize the ability to identify patterns and minimize unexplained variability
+
+--
+
+&gt; Predictive goal: maximize the out-of-sample predictive power of the model
+
+
+---
+
+# Models?
+
+1. **Models as representations** of ideas or assumptions about how the world works. 
+
+2. **Purpose**: help understand, explain, and predict phenomena using data.
+
+3. **Simplification**: models are simplifications of reality, focusing on essential aspects while ignoring irrelevant details.
+
+4. **Mathematical structure**: models have mathematical foundations (equations describing relationships between input and output).BUT black-box approach!
+
+--
+
+&gt; Example: predict the impact (impressions) of an online campaign. To do so use features such as total expenditure, target population (generation), social media of choice (fb, ig...) ... A predictive model reflects our understanding of the problem linking features with outcomes
+   
+---
+class: tiny
+
+# Forecasting
+
+.panelset[
+.panel[.panel-name[Example]
+
+&lt;table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; time &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; airport &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; variable &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; values &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2000 Jan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ES_LEAL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; CAF_PAS &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2470 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2000 Feb &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ES_LEAL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; CAF_PAS &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2519 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2000 Mar &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ES_LEAL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; CAF_PAS &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2931 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2000 Apr &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ES_LEAL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; CAF_PAS &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3437 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2000 May &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ES_LEAL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; CAF_PAS &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3726 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2000 Jun &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ES_LEAL &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; CAF_PAS &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3718 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+.panel[.panel-name[Task]
+
+&gt; Given an outcome `\(Y\)` (in our example commercial flights to Alicante) that is observed over time (up to point `\(t\)`), the goal is to generate predictions for future values `\(Y_{t+1}, Y_{t+2} \ldots Y_{t+h}\)`.
+
+&gt; Predictive task?
+
+]
+
+.panel[.panel-name[Exploratory analysis]
+&lt;img src="presentation_wp_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.panel[.panel-name[Methods]
+
+&gt; Response = **Patterns** + Randomness
+
+- Models: TS decomposition, ARIMA, regression analysis (TSLR), k-nearest neighbors, 
+regression trees neural networks...
+]
+
+]
+
+
+---
+class: tiny
+
+# Predicting numerical outcomes 
+
+.panelset[
+.panel[.panel-name[Example]
+Analysing FB ads conversion into purchases 
+
+
+
+&lt;table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; ad_id &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; fb_campaign_id &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; age &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; interest &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Impressions &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Clicks &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Spent &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Conversion &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Approved &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Gender &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 70838 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45908 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 40-44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 59 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9735 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 259 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 478.8921 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 37 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 77612 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25729 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 30-34 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5014 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 215 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 348.4932 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 78908 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18697 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 30-34 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 37 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 333345 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 177 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 334.1244 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 40 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 38 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 77559 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 48314 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 30-34 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 95 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 253758 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 147 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 274.4977 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 74728 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 64470 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 40-44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 92 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 304680 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 236 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 390.2238 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 71244 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 33279 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 35-39 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 66 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6607 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 183 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 305.0383 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 53 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+]
+.panel[.panel-name[Task]
+
+&gt; Goal: predict `Approved` conversion (number of sales) based on observed features of the specific ad.
+
+&gt; Predictive task?
+
+]
+.panel[.panel-name[Exploratory analysis]
+&lt;img src="presentation_wp_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+]
+.panel[.panel-name[Methods]
+
+&gt; Response = **Patterns** + Randomness
+
+- Models: regression analysis, classification trees, random forests,
+support vector machines...
+
+]]
+
+---
+class: tiny
+
+# Predicting categorical outcomes
+
+.panelset[
+.panel[.panel-name[Example]
+Analysing individual's reaction to online ads
+
+
+
+
+&lt;table class="table table-striped table-hover table-condensed table-responsive" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; impression_id &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; impression_time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; user_id &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; app_code &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; os_version &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; is_4G &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; is_click &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; c4ca4238a0b923820dcc509a6f75849b &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2018-11-15 00:00:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 87862 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 422 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; old &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 45c48cce2e2d7fbdea1afc51c7c6ad26 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2018-11-15 00:01:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63410 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 467 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; latest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 70efdf2ec9b086079795c442636b55fb &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2018-11-15 00:02:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 71748 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 259 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; intermediate &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 8e296a067a37563370ded05f5a3bf3ec &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2018-11-15 00:02:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 69209 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 244 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; latest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 182be0c5cdcd5072bb1864cdee4d3d6e &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2018-11-15 00:02:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 62873 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 473 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; latest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3416a75f4cea9109507cacd8e2f2aefc &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2018-11-15 00:03:00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67352 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 409 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; latest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+.panel[.panel-name[Task]
+
+&gt; Goal: predict whether an individual `clicked` an ad.
+
+&gt; Predictive task?
+
+]
+
+.panel[.panel-name[Exploratory analysis]
+&lt;img src="presentation_wp_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.panel[.panel-name[Methods]
+&gt; Response = **Patterns** + Randomness
+
+
+- Models: regression analysis for categorical responses (i.e. generalized linear 
+  models), classification trees,  random forests, support vector machines...
+]
+]
+
+
+---
+
+# Models: *howto*
+
+
+Three key tasks:
+
+1. **Formulation**: the first step involves defining the relationship between the outcome (target) and features (inputs). We establish how variables are linked and decide on the model structure (complexity).
+   
+2. **Fitting**: fitting a model means adjusting its parameters to match the data patterns. Once fitted, the model can make predictions on new data.
+
+3. **Evaluation**: this step assesses the model’s performance, typically through error metrics or validation techniques, ensuring it generalizes well to new data.
+
+
+---
+
+# An illustration
+
+Two examples: 
+
+1. [In-sample model evaluation](https://juandm.shinyapps.io/regtree_train/)
+
+2. [Out-of-sample model evaluation](https://juandm.shinyapps.io/regtree_test/)
+
+Key concepts: Model, parameters, fit, train, training data, test/holdout data, prediction errors
+
+---
+
+# AI and data analysis
+
+
+**Benefits of AI in Automated Data Analysis**
+
+- **No Need for Coding**: AI allows users to formulate questions and analyze data without requiring coding skills.
+- **Speed and Efficiency**: AI can quickly analyze large datasets.
+- **Automation**: reduces the need for manual intervention, streamlining workflows and decision-making processes.
+
+--
+
+**Critical Caveat**
+
+- **Understanding and Interpretation**:  It's crucial to understand how the AI processes and analyzes the data.    AI-generated results can be **wrong or biased**.
+  
+- **Critical Evaluation**: Analysts should always **question AI outputs** and apply domain knowledge to verify conclusions.  
+
+
+---
+class: inverse, center, middle
+
+# The road ahead
+
+
+---
+
+# Contents and teaching methodology
+
+--
+
+- What?  
+--
+
+  - Forecasting univariate data (time series prediction)
+--
+
+  - Prediction using regression models for multivariate data
+--
+
+  - Model evaluation (predictive power)
+--
+
+- How?
+--
+
+  - Hands-on approach (learning by doing) 
+--
+
+  - Use of `Quarto` to produce final reports combining a narrative (formatted text) and `R` output
+--
+
+  - Teamwork
+---
+
+# R
+
+What is `R`?
+
+- Software for statistical and graphical computing
+- Programming language
+
+--
+
+What is `RStudio`?
+
+- An interface to `R`
+
+--
+
+Why `R`?
+
+- Free
+- Open source
+- Large community 
+- Standard in statistical analysis and machine learning
+
+
+
+---
+class:inverse,middle,center
+
+# Basic use of R
+
+---
+class: tiny
+
+# Working with R
+
+.panelset[
+.panel[.panel-name[Interactive mode]
+.center[![command](pics/screen_console.png)]
+
+]
+.panel[.panel-name[Scripts]
+.center[![command](pics/screen_script.png)]
+]
+.panel[.panel-name[Quarto]
+
+.center[![command](pics/quarto.png)]
+
+]
+]
+---
+
+# Working with R: basics arithmetics
+
+1. Open a new file (File-&gt; New file -&gt; R script). 
+2. Copy and paste code below
+3. Run it
+
+
+``` r
+# These are simple arithmetic expressions
+2+2
+14*12
+7+7*12
+(7+7)*12
+9/3
+
+# Starting a line with a hashtag explicitly tells R it is a comment and will
+# not be run
+
+# Let us compute the mean of these numbers: 16,31,27,23,15,17,17,18,14
+(16+31+27+23+15+17+17+18+14)/9
+```
+---
+
+# Working with R: functions
+
+Functions are statements that perform specific tasks and aim at simplifying certain actions. 
+
+
+
+``` r
+# IG user posts: this is a vector (collection) of numbers
+c(16,31,27,23,15,17,17,18,14)
+
+# Function mean( ) computes the mean of the arguments we pass to it (a vector)
+mean(c(16,31,27,23,15,17,17,18,14))
+
+# Function sd( ) computes the standard deviation of the arguments we pass to it (a vector)
+sd(c(16,31,27,23,15,17,17,18,14))
+```
+
+---
+# Working with R: assignments
+
+Through an assignment we name an  R object that can later be re-used:
+
+
+``` r
+# We assign the name IGposts to the vector 16,31,27,23,15,17,17,18,14
+IGposts = c(16,31,27,23,15,17,17,18,14)
+
+# Then we can apply functions to the name
+mean(IGposts)
+
+sd(IGposts)
+```
+
+
+
+```
+## [1] 19.77778
+```
+
+```
+## [1] 5.890199
+```
+
+---
+
+# Working with R: data structures (i)
+
+There are some data structures in `R` that will be useful. The first one, we already know: the vector. We create vectors (or collections of items of the same type)
+by using the `c( )` notation.
+
+
+
+``` r
+# IG user posts over 9 days
+IGposts = c(16,31,27,23,15,17,17,18,14)
+
+# Interactions to posts over same 9 days
+Interactions = c(165,314,280,195,137,286,199,128,462)
+```
+---
+
+# Working with R: data structures (ii)
+
+The most useful data structure is a `data frame`: a data frame is a table (2 dimensional structure) in which each column contains values of one variable and each row contains one set of values from each column.
+
+
+
+``` r
+# Creating a dataframe using IGposts and Interactions
+mydataframe = data.frame(IGposts,Interactions)
+head(mydataframe)
+```
+
+```
+##   IGposts Interactions
+## 1      16          165
+## 2      31          314
+## 3      27          280
+## 4      23          195
+## 5      15          137
+## 6      17          286
+```
+
+---
+
+# Dataframes: variables/observations selection
+
+We can use matrix notation `mydataframe[i,j]` to select columns (i.e. variables) or rows (i.e. observations) in a dataframe. 
+
+Copy and run the code below:
+
+
+``` r
+# Select variable IGposts
+mydataframe[ , 1] 
+
+# Select variable Interactions
+mydataframe[ , 2] 
+
+# Select IGposts and Interactions on day 3
+mydataframe[ 3, ] 
+
+# Alternative way of selecting a variable using its name (note the quotation marks)
+
+mydataframe[,"Interactions"]
+```
+
+---
+class: inverse, center
+background-image: url("images/headaches.jpg")
+background-size: 600px 600px
+background-position: center
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"includePresenterNotes": false,
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
